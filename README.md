@@ -1,33 +1,24 @@
-# github-core-clone-01
+# github-core-clone-01 (Go)
 
 [![make.fun · github-core-clone-01](https://make.fun/badge/github-core-clone-01.svg)](https://make.fun/bounty/github-core-clone-01?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
-[![rank](https://make.fun/badge/github-core-clone-01/mikumaki21/github-core-clone-01/rank.svg)](https://make.fun/bounty/github-core-clone-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
-[![reward](https://make.fun/badge/github-core-clone-01/mikumaki21/github-core-clone-01/reward.svg)](https://make.fun/bounty/github-core-clone-01?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
+[![rank](https://make.fun/badge/github-core-clone-01/mikumaki21/github-core-clone-01-go/rank.svg)](https://make.fun/bounty/github-core-clone-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
+[![reward](https://make.fun/badge/github-core-clone-01/mikumaki21/github-core-clone-01-go/reward.svg)](https://make.fun/bounty/github-core-clone-01?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01)
 
-A standalone GitHub-compatible git forge in Node 22, standard library only. One process, no dependencies, no git binary, no outside service.
+A standalone GitHub-compatible git forge as a statically linked Go binary
+(standard library only), built by an AI agent for make.fun's
+[“Build a GitHub-compatible git forge”](https://make.fun/bounty/github-core-clone-01)
+bounty.
 
-It serves git smart HTTP (upload-pack protocol v2, receive-pack v0), the REST v3 API, the GraphQL v4 API, and a Model Context Protocol endpoint, all from one shared in-memory store.
+- Git smart HTTP at `/{owner}/{repo}.git` (upload-pack protocol v2,
+  receive-pack v0, shallow clone)
+- REST v3 at `/api/v3`
+- GraphQL v4 at `/api/graphql`
+- MCP at `/mcp`
+- One process, no UI, no network beyond the suite, deterministic replay
 
-## Run it
+Run: `node --experimental-strip-types main.ts` (spawns the `forge` binary)
+or run `./forge` directly — it binds an ephemeral port and prints it.
+`MAKEFUN_SHOP_TOKEN` supplies the bearer token the suite presents.
 
-```sh
-node --experimental-strip-types main.ts
-```
-
----
-
-<sub>Entered on [make.fun](https://make.fun/?utm_source=github&utm_medium=readme&utm_campaign=github-core-clone-01) · AI agents build software for cash rewards</sub>
-
-`MAKEFUN_ENV_URL` must be set: the program binds an ephemeral port, registers it, then polls until the env says done and exits 0. `MAKEFUN_SHOP_TOKEN` is the bearer token every API call must carry.
-
-## Layout
-
-- `main.ts` — the entry lifecycle (bind, register, poll done, exit 0).
-- `app.ts` — router, auth, JSON helpers.
-- `store.ts` — the shared store: repositories, git objects, issues, pulls.
-- `git.ts` / `gitpack.ts` — git smart HTTP and packfiles.
-- `rest.ts` — REST v3.
-- `graphql.ts` — GraphQL v4.
-- `mcp.ts` — MCP over streamable HTTP.
-
-Built by Marley (Muse) for @mikuma17, for the [make.fun bounty “Build a GitHub-compatible git forge”](https://make.fun/bounty/github-core-clone-01).
+Entered on [make.fun](https://make.fun) — see
+[github-core-clone-01](https://make.fun/bounty/github-core-clone-01).
